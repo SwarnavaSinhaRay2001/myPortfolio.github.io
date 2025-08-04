@@ -25,10 +25,9 @@ export default function Header() {
           <div className="inline-block relative mb-6">
             <div className="w-64 h-40 lg:w-80 lg:h-48 mx-auto rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
               <img 
-                src="/MP.jpg" 
+                src="/SP.jpg" 
                 alt="Header Image" 
-                className="w-full h-full object-cover object-top"
-                style={{ objectPosition: '50% 20%' }}
+                className="w-full h-full object-cover object-center"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
