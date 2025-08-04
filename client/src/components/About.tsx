@@ -57,7 +57,17 @@ export default function About() {
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('cv', file);
-      const response = await apiRequest('POST', '/api/upload-cv', formData);
+      
+      const response = await fetch('/api/upload-cv', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Upload failed');
+      }
+      
       return response.json();
     },
     onSuccess: () => {

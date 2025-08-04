@@ -104,7 +104,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // CV file upload
   app.post("/api/upload-cv", upload.single('cv'), async (req, res) => {
     try {
+      console.log('Upload request received:', {
+        hasFile: !!req.file,
+        bodyKeys: Object.keys(req.body || {}),
+        headers: req.headers['content-type']
+      });
+      
       if (!req.file) {
+        console.error('No file in request:', req.file);
         return res.status(400).json({
           success: false,
           message: "No file uploaded"
