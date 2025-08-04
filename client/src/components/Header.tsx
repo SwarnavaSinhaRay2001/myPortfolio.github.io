@@ -21,12 +21,23 @@ export default function Header() {
       
       <div className="relative max-w-6xl mx-auto px-6 py-16 lg:py-24">
         <div className="text-center">
-          {/* Profile picture */}
+          {/* Header Image */}
           <div className="inline-block relative mb-8">
-            <div className="w-32 h-32 lg:w-40 lg:h-40 mx-auto bg-gradient-to-br from-teal-400 to-teal-600 rounded-full flex items-center justify-center text-white text-4xl lg:text-5xl shadow-2xl animate-fade-in">
-              <User className="w-16 h-16 lg:w-20 lg:h-20" />
+            <div className="w-48 h-32 lg:w-56 lg:h-36 mx-auto rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
+              <img 
+                src="/MP.jpg" 
+                alt="Header Image" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden w-full h-full bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl flex items-center justify-center text-white text-4xl lg:text-5xl">
+                <User className="w-16 h-16 lg:w-20 lg:h-20" />
+              </div>
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white dark:border-gray-700 animate-pulse-soft"></div>
           </div>
           
           {/* Name and title */}
@@ -42,38 +53,38 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
               onClick={() => window.open('https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0', '_blank')}
               title="LinkedIn"
             >
-              <Linkedin className="text-white group-hover:scale-110 transition-transform" />
+              <Linkedin className="w-7 h-7 text-white fill-white group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
               onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
               title="Facebook"
             >
-              <Facebook className="text-white group-hover:scale-110 transition-transform" />
+              <Facebook className="w-7 h-7 text-white fill-white group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
               onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
               title="Instagram"
             >
-              <Instagram className="text-white group-hover:scale-110 transition-transform" />
+              <Instagram className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
               onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
               title="Telegram"
             >
-              <Send className="text-white group-hover:scale-110 transition-transform" />
+              <Send className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
             </Button>
           </div>
           

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, CheckCircle } from "lucide-react";
+import { useState } from "react";
 
 const educationData = [
   {
@@ -45,6 +46,13 @@ const educationData = [
 ];
 
 export default function Education() {
+  const [clickedCard, setClickedCard] = useState<number | null>(null);
+
+  const handleCardClick = (index: number) => {
+    setClickedCard(index);
+    setTimeout(() => setClickedCard(null), 300); // Reset after animation
+  };
+
   return (
     <section id="education" className="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-6xl mx-auto px-6">
@@ -69,7 +77,12 @@ export default function Education() {
                   className="absolute left-6 w-4 h-4 bg-teal-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg animate-pulse-dot"
                   style={{ animationDelay: `${1.2 + index * 0.3}s` }}
                 ></div>
-                <Card className="education-card bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-500">
+                <Card 
+                  className={`education-card bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-500 cursor-pointer ${
+                    clickedCard === index ? 'animate-zoom-click' : ''
+                  }`}
+                  onClick={() => handleCardClick(index)}
+                >
                   <CardContent className="p-6 lg:p-8">
                     <div className="flex flex-wrap items-center justify-between mb-4">
                       <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
