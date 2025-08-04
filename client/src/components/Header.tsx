@@ -54,7 +54,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl border-2 border-blue-400 hover:border-blue-300"
               onClick={() => window.open('https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0', '_blank')}
               title="LinkedIn"
             >
@@ -63,7 +63,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl border-2 border-blue-400 hover:border-blue-300"
               onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
               title="Facebook"
             >
@@ -72,7 +72,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl border-2 border-blue-400 hover:border-blue-300"
               onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
               title="Instagram"
             >
@@ -81,7 +81,7 @@ export default function Header() {
             <Button
               variant="outline"
               size="icon"
-              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
+              className="social-link group p-5 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl border-2 border-blue-400 hover:border-blue-300"
               onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
               title="Telegram"
             >
