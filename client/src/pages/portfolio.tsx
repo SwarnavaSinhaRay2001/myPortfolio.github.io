@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import About from "@/components/About";
 import Education from "@/components/Education";
+import Skills from "@/components/Skills";
+import Tools from "@/components/Tools";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import NotificationContainer from "@/components/NotificationContainer";
@@ -31,6 +33,8 @@ export default function Portfolio() {
       <Header />
       <About />
       <Education />
+      <Skills />
+      <Tools />
       <Contact />
       <Footer />
       

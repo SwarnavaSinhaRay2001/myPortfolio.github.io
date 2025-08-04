@@ -22,12 +22,12 @@ export default function Header() {
       <div className="relative max-w-6xl mx-auto px-6 py-16 lg:py-24">
         <div className="text-center">
           {/* Header Image */}
-          <div className="inline-block relative mb-8">
-            <div className="w-48 h-32 lg:w-56 lg:h-36 mx-auto rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
+          <div className="inline-block relative mb-6">
+            <div className="w-64 h-40 lg:w-80 lg:h-48 mx-auto rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
               <img 
                 src="/MP.jpg" 
                 alt="Header Image" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -41,7 +41,7 @@ export default function Header() {
           </div>
           
           {/* Name and title */}
-          <h1 className="text-4xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-slate-900 via-teal-700 to-slate-900 dark:from-gray-200 dark:via-teal-300 dark:to-gray-200 bg-clip-text text-transparent animate-slide-up">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-slate-900 via-teal-700 to-slate-900 dark:from-gray-200 dark:via-teal-300 dark:to-gray-200 bg-clip-text text-transparent animate-slide-up">
             Swarnava Sinha Ray
           </h1>
           <p className="text-xl lg:text-2xl text-slate-500 dark:text-gray-300 mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
@@ -102,6 +102,20 @@ export default function Header() {
               className="px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium border border-gray-200 dark:border-gray-600"
             >
               Education
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection('skills')}
+              className="px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium border border-gray-200 dark:border-gray-600"
+            >
+              Skills
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection('tools')}
+              className="px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium border border-gray-200 dark:border-gray-600"
+            >
+              Tools
             </Button>
             <Button
               variant="outline"
