@@ -1,5 +1,7 @@
-import { type User, type InsertUser, type Contact, type InsertContact, type CvFile, type InsertCvFile } from "@shared/schema";
+import { type User, type InsertUser, type Contact, type InsertContact, type CvFile, type InsertCvFile, users, contacts, cvFiles } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -103,4 +105,75 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database Storage Implementation
+export class DatabaseStorage implements IStorage {
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+
+  async createContact(insertContact: InsertContact): Promise<Contact> {
+    const [contact] = await db
+      .insert(contacts)
+      .values(insertContact)
+      .returning();
+    return contact;
+  }
+
+  async getAllContacts(): Promise<Contact[]> {
+    return await db.select().from(contacts).orderBy(contacts.createdAt);
+  }
+
+  async markContactAsRead(id: string): Promise<void> {
+    await db
+      .update(contacts)
+      .set({ isRead: true })
+      .where(eq(contacts.id, id));
+  }
+
+  async createCvFile(insertCvFile: InsertCvFile): Promise<CvFile> {
+    const [cvFile] = await db
+      .insert(cvFiles)
+      .values(insertCvFile)
+      .returning();
+    return cvFile;
+  }
+
+  async getActiveCvFile(): Promise<CvFile | undefined> {
+    const [cvFile] = await db
+      .select()
+      .from(cvFiles)
+      .where(eq(cvFiles.isActive, true))
+      .limit(1);
+    return cvFile || undefined;
+  }
+
+  async deactivateAllCvFiles(): Promise<void> {
+    await db
+      .update(cvFiles)
+      .set({ isActive: false });
+  }
+
+  async activateCvFile(id: string): Promise<void> {
+    await this.deactivateAllCvFiles();
+    await db
+      .update(cvFiles)
+      .set({ isActive: true })
+      .where(eq(cvFiles.id, id));
+  }
+}
+
+export const storage = new DatabaseStorage();

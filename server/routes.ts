@@ -169,6 +169,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // CV file viewer (public)
+  app.get("/api/view-cv", async (req, res) => {
+    try {
+      const activeCv = await storage.getActiveCvFile();
+      
+      if (!activeCv) {
+        return res.status(404).json({
+          success: false,
+          message: "No CV file available for viewing"
+        });
+      }
+
+      const filePath = activeCv.filePath;
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({
+          success: false,
+          message: "CV file not found on server"
+        });
+      }
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="${activeCv.originalName}"`);
+      
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+    } catch (error) {
+      console.error('CV view error:', error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to view CV. Please try again."
+      });
+    }
+  });
+
   // Get CV status
   app.get("/api/cv-status", async (req, res) => {
     try {

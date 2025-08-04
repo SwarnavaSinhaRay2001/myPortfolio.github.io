@@ -28,7 +28,7 @@ export default function Header() {
                 src="/SP.jpg" 
                 alt="Header Image" 
                 className="w-full h-full object-cover"
-                style={{ objectPosition: '50% 55%' }}
+                style={{ objectPosition: '50% 10%' }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -96,6 +96,12 @@ export default function Header() {
               className="px-6 py-3 bg-teal-500 hover:bg-teal-600 text-white rounded-lg font-medium"
             >
               About Me
+            </Button>
+            <Button
+              onClick={() => window.open('/api/view-cv', '_blank')}
+              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium"
+            >
+              View CV
             </Button>
             <Button
               variant="outline"

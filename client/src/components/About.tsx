@@ -215,27 +215,37 @@ export default function About() {
                         </div>
                       )}
                       
-                      <Button
-                        onClick={() => downloadMutation.mutate()}
-                        disabled={downloadMutation.isPending || !cvStatus?.hasActiveCv}
-                        className="w-full bg-teal-500 hover:bg-teal-600 text-white"
-                      >
-                        {downloadMutation.isPending ? (
-                          <>
-                            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2"></div>
-                            Preparing CV...
-                          </>
-                        ) : (
-                          <>
-                            <Download className="w-4 h-4 mr-2" />
-                            Download CV
-                          </>
-                        )}
-                      </Button>
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => window.open('/api/view-cv', '_blank')}
+                          disabled={!cvStatus?.hasActiveCv}
+                          className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
+                        >
+                          <FileText className="w-4 h-4 mr-2" />
+                          View CV
+                        </Button>
+                        <Button
+                          onClick={() => downloadMutation.mutate()}
+                          disabled={downloadMutation.isPending || !cvStatus?.hasActiveCv}
+                          className="flex-1 bg-teal-500 hover:bg-teal-600 text-white"
+                        >
+                          {downloadMutation.isPending ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2"></div>
+                              Preparing...
+                            </>
+                          ) : (
+                            <>
+                              <Download className="w-4 h-4 mr-2" />
+                              Download CV
+                            </>
+                          )}
+                        </Button>
+                      </div>
                       
-                      {/* Download stats */}
+                      {/* CV Info */}
                       <div className="mt-4 text-center text-sm text-slate-500 dark:text-gray-400">
-                        <span>Professional portfolio document</span>
+                        <span>Professional portfolio document - View online or download PDF</span>
                       </div>
                     </CardContent>
                   </Card>
