@@ -124,8 +124,34 @@ export default function About() {
           
           <Card className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-600">
             <CardContent className="p-8 lg:p-12">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div className="space-y-6">
+              <div className="grid lg:grid-cols-3 gap-8 items-center">
+                {/* Profile Picture */}
+                <div className="lg:col-span-1 flex justify-center">
+                  <div className="relative">
+                    <div className="w-48 h-48 lg:w-64 lg:h-64 mx-auto bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl shadow-xl flex items-center justify-center transform rotate-3 hover:rotate-0 transition-transform duration-500 overflow-hidden">
+                      <img 
+                        src="/PP.jpg" 
+                        alt="Swarnava Sinha Ray" 
+                        className="w-44 h-44 lg:w-60 lg:h-60 object-cover rounded-xl shadow-inner"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `
+                              <div class="w-44 h-44 lg:w-60 lg:h-60 bg-white dark:bg-gray-700 rounded-xl shadow-inner flex items-center justify-center">
+                                <span class="text-2xl lg:text-4xl text-slate-400 dark:text-gray-500">SR</span>
+                              </div>
+                            `;
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* About Content */}
+                <div className="lg:col-span-2 space-y-6">
                   <p className="text-lg text-slate-600 dark:text-gray-300 leading-relaxed">
                     Hello, I am a BCA graduate and a MCA Post-Graduate, I have a profound knowledge of Core JAVA and also developing my skills on AI/ML. I have done projects both on JAVA, HTML/CSS, SQL. I am very good at taking responsibilities and problem solving situations. I am looking for job opportunities as a frontend developer , software engineer and so on.
                   </p>
@@ -145,8 +171,10 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-                
-                {/* CV Download section */}
+              </div>
+              
+              {/* CV Download section - Full width below */}
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-600">
                 <div className="space-y-6">
                   <Card className="bg-gradient-to-br from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20 border border-teal-100 dark:border-teal-800">
                     <CardContent className="p-6">

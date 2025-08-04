@@ -48,7 +48,7 @@ export default function Education() {
   return (
     <section id="education" className="py-16 lg:py-24 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-slate-900 dark:text-gray-200">Education Journey</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
         </div>
@@ -56,23 +56,26 @@ export default function Education() {
         <div className="max-w-4xl mx-auto">
           {/* Timeline */}
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-teal-600"></div>
+            {/* Animated Timeline line */}
+            <div className="timeline-line animate-timeline-draw" style={{ animationDelay: '0.5s' }}></div>
             
             {educationData.map((item, index) => (
               <div
                 key={index}
-                className="timeline-item relative pl-20 pb-12 animate-slide-up"
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className="timeline-item relative pl-20 pb-12 animate-fade-in-scale"
+                style={{ animationDelay: `${0.8 + index * 0.3}s` }}
               >
-                <div className="absolute left-6 w-4 h-4 bg-teal-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg"></div>
-                <Card className="bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-shadow duration-300">
+                <div 
+                  className="absolute left-6 w-4 h-4 bg-teal-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg animate-pulse-dot"
+                  style={{ animationDelay: `${1.2 + index * 0.3}s` }}
+                ></div>
+                <Card className="education-card bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-500">
                   <CardContent className="p-6 lg:p-8">
                     <div className="flex flex-wrap items-center justify-between mb-4">
-                      <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-gray-200">
+                      <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
                         {item.title}
                       </h3>
-                      <span className={`px-4 py-2 ${item.yearBg} ${item.yearText} rounded-full text-sm font-medium`}>
+                      <span className={`px-4 py-2 ${item.yearBg} ${item.yearText} rounded-full text-sm font-medium hover:scale-105 transition-transform`}>
                         {item.year}
                       </span>
                     </div>

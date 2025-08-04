@@ -24,28 +24,28 @@ export default function Footer() {
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-5 h-5 text-white" />
               </button>
               <button
                 onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-5 h-5 text-white" />
               </button>
               <button
                 onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-5 h-5 text-white" />
               </button>
               <button
                 onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Telegram"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-5 h-5 text-white" />
               </button>
             </div>
           </div>
