@@ -34,7 +34,7 @@ export default function Header() {
             Swarnava Sinha Ray
           </h1>
           <p className="text-xl lg:text-2xl text-slate-500 dark:text-gray-300 mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            Computer Science Professional
+            IT Professional
           </p>
           
           {/* Social links */}
@@ -43,7 +43,7 @@ export default function Header() {
               variant="outline"
               size="icon"
               className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
-              onClick={() => window.open('https://linkedin.com', '_blank')}
+              onClick={() => window.open('https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0', '_blank')}
               title="LinkedIn"
             >
               <Linkedin className="text-blue-600 group-hover:scale-110 transition-transform" />
@@ -52,7 +52,7 @@ export default function Header() {
               variant="outline"
               size="icon"
               className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
-              onClick={() => window.open('https://facebook.com', '_blank')}
+              onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
               title="Facebook"
             >
               <Facebook className="text-blue-800 group-hover:scale-110 transition-transform" />
@@ -61,7 +61,7 @@ export default function Header() {
               variant="outline"
               size="icon"
               className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
-              onClick={() => window.open('https://instagram.com', '_blank')}
+              onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
               title="Instagram"
             >
               <Instagram className="text-pink-600 group-hover:scale-110 transition-transform" />
@@ -70,7 +70,7 @@ export default function Header() {
               variant="outline"
               size="icon"
               className="social-link group p-4 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl"
-              onClick={() => window.open('https://telegram.me', '_blank')}
+              onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
               title="Telegram"
             >
               <Send className="text-blue-500 group-hover:scale-110 transition-transform" />

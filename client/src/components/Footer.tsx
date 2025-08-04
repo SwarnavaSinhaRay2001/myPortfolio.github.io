@@ -16,32 +16,32 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4">Swarnava Sinha Ray</h3>
             <p className="text-gray-300 mb-4">
-              Computer Science Professional passionate about creating innovative solutions and contributing to meaningful projects.
+              IT Professional passionate about creating innovative solutions and contributing to meaningful projects.
             </p>
             <div className="flex space-x-4">
               <button
-                onClick={() => window.open('https://linkedin.com', '_blank')}
+                onClick={() => window.open('https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </button>
               <button
-                onClick={() => window.open('https://facebook.com', '_blank')}
+                onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </button>
               <button
-                onClick={() => window.open('https://instagram.com', '_blank')}
+                onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </button>
               <button
-                onClick={() => window.open('https://telegram.me', '_blank')}
+                onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
                 className="text-gray-400 hover:text-teal-400 transition-colors"
                 title="Telegram"
               >
@@ -94,7 +94,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center text-gray-300">
                 <span className="text-teal-400 mr-3">✉️</span>
-                <span>swarnava.ray@email.com</span>
+                <span>swarnavasinharay@gmail.com</span>
               </div>
               <div className="flex items-start text-gray-300">
                 <span className="text-teal-400 mr-3 mt-1">📍</span>

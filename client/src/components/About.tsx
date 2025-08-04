@@ -127,7 +127,7 @@ export default function About() {
               <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <div className="space-y-6">
                   <p className="text-lg text-slate-600 dark:text-gray-300 leading-relaxed">
-                    I am a dedicated computer science professional with a strong foundation in software development and technology. Currently pursuing my MCA to further enhance my technical expertise and stay current with industry trends.
+                    Hello, I am a BCA graduate and a MCA Post-Graduate, I have a profound knowledge of Core JAVA and also developing my skills on AI/ML. I have done projects both on JAVA, HTML/CSS, SQL. I am very good at taking responsibilities and problem solving situations. I am looking for job opportunities as a frontend developer , software engineer and so on.
                   </p>
                   <p className="text-lg text-slate-600 dark:text-gray-300 leading-relaxed">
                     With experience in various programming languages and technologies, I am passionate about creating innovative solutions and contributing to meaningful projects that make a difference.

@@ -170,14 +170,14 @@ export default function Contact() {
                   {/* Email */}
                   <div
                     className="contact-item flex items-center p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer group"
-                    onClick={() => handleContactItemClick('email', 'swarnava.ray@email.com')}
+                    onClick={() => handleContactItemClick('email', 'swarnavasinharay@gmail.com')}
                   >
                     <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                       <Mail className="text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                       <p className="font-medium text-slate-900 dark:text-gray-200">Email</p>
-                      <span className="text-slate-600 dark:text-gray-300">swarnava.ray@email.com</span>
+                      <span className="text-slate-600 dark:text-gray-300">swarnavasinharay@gmail.com</span>
                     </div>
                   </div>
                   
