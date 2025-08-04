@@ -1,0 +1,19 @@
+Below my name change the "Computer Science Professional" to "IT Professional"
+
+Link the linkedln icon with - www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0
+Link the facebook with - https://www.facebook.com/swarnava.sinharay
+Link the instagram with - https://www.instagram.com/_drishyomaan_/?hl=en
+Link the telegram with - t.me/iamRAY20
+
+In the About section change only the first paragraph to "Hello, I am a BCA graduate and a MCA Post-Graduate, I have a profound knowledge of Core JAVA and also developing my skills on AI/ML. I have done projects both on JAVA, HTML/CSS, SQL. I am very good at taking responsibilities and problem solving situations. I am looking for job opportunities as a frontend developer , software engineer and so on."
+
+
+In the secondary section change the bio to "Completed my class 10th from Mansur Habibullah Memorial School, Kolkata with a total of 86.8 %"
+
+In the high secondary section chnage the bio to "Completed my class 12th from Mansur Habibullah Memorial School, Kolkata with a total of 77.5 %, and also have immense interest in Computer Science and Applications so I applied for pursuing BCA"
+
+In the BCA section change the bio to "Completed my Bachelor's Degree with a CGPA of 8.95, during this time I accqired knowledge about DSA(Data Structures and Algorithm), DBMS basics of SQL on ORACLE and Networking , also gained a profound knowledge on Core JAVA, I also built a project on 'Ethical Hacking' and 'Graph Colouring Problem using stimulated annealing'."
+
+In thee MCA section chnage the bio to "Completed my Master's Degree with a CGPA of 8.07, duting this tenure I gained knowledge about DAA(Design Algorithm and Analysis), advanced knowledge of SQL on ORACLE and Operating System, brushed my knowledge on Core JAVA, basics of HTML and CSS. I have done projects on 'Blood Bank Management System' and 'Message Transmission using Steganography Approach'."
+
+Change the email to - swarnavasinharay@gamil.com
