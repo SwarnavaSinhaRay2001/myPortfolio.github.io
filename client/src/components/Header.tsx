@@ -58,7 +58,7 @@ export default function Header() {
               onClick={() => window.open('https://www.linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=swarnava-sinha-ray-06151a1a0', '_blank')}
               title="LinkedIn"
             >
-              <Linkedin className="w-7 h-7 text-white fill-white group-hover:scale-110 transition-transform" />
+              <Linkedin className="w-7 h-7 text-blue-500 fill-blue-500 group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
@@ -67,7 +67,7 @@ export default function Header() {
               onClick={() => window.open('https://www.facebook.com/swarnava.sinharay', '_blank')}
               title="Facebook"
             >
-              <Facebook className="w-7 h-7 text-white fill-white group-hover:scale-110 transition-transform" />
+              <Facebook className="w-7 h-7 text-blue-500 fill-blue-500 group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
@@ -76,7 +76,7 @@ export default function Header() {
               onClick={() => window.open('https://www.instagram.com/_drishyomaan_/?hl=en', '_blank')}
               title="Instagram"
             >
-              <Instagram className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
+              <Instagram className="w-7 h-7 text-blue-500 group-hover:scale-110 transition-transform" />
             </Button>
             <Button
               variant="outline"
@@ -85,7 +85,7 @@ export default function Header() {
               onClick={() => window.open('https://t.me/iamRAY20', '_blank')}
               title="Telegram"
             >
-              <Send className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
+              <Send className="w-7 h-7 text-blue-500 group-hover:scale-110 transition-transform" />
             </Button>
           </div>
           
