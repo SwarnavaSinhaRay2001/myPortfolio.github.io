@@ -27,7 +27,8 @@ export default function Header() {
               <img 
                 src="/MP.jpg" 
                 alt="Header Image" 
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-top"
+                style={{ objectPosition: '50% 20%' }}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
