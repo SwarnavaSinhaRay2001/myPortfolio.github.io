@@ -2,6 +2,14 @@
 
 This is a personal portfolio website for Swarnava Sinha Ray, a computer science professional. The application is built as a full-stack web application with a React frontend and Express.js backend, featuring a modern design system using shadcn/ui components. The portfolio includes sections for personal information, education history, CV management, and a contact form with email functionality.
 
+## Recent Changes (August 2025)
+
+### Deployment Fixes for Render.com
+- **Fixed CV Mechanism**: Now uses static CV file (SwarnavaCV.pdf) instead of ephemeral uploads
+- **Improved Email Handling**: Added graceful fallback for missing email credentials
+- **Enhanced Error Handling**: Better production-ready error messages and logging
+- **Deployment Configuration**: Added Render-specific build and deployment instructions
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

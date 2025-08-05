@@ -7,6 +7,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import nodemailer from "nodemailer";
+import { getStaticCvFile, checkStaticCvExists } from "./static-cv";
 
 // Configure multer for file uploads
 const uploadsDir = path.join(process.cwd(), "server", "uploads");
@@ -38,14 +39,26 @@ const upload = multer({
   }
 });
 
-// Configure nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'your.email@gmail.com',
-    pass: process.env.EMAIL_PASSWORD || 'your-app-password'
+// Configure nodemailer with better error handling for deployment
+const createEmailTransporter = () => {
+  const emailUser = process.env.EMAIL_USER;
+  const emailPassword = process.env.EMAIL_PASSWORD;
+  
+  if (!emailUser || !emailPassword) {
+    console.warn('Email credentials not configured. Email functionality will be limited.');
+    return null;
   }
-});
+  
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: emailUser,
+      pass: emailPassword
+    }
+  });
+};
+
+const transporter = createEmailTransporter();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -56,7 +69,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Send email notification
       try {
-        await transporter.sendMail({
+        if (!transporter) {
+          console.warn('Email transporter not configured, skipping email notification');
+        } else {
+          await transporter.sendMail({
           from: process.env.EMAIL_USER || 'noreply@portfolio.com',
           to: 'swarnavasinharay@gmail.com',
           subject: `New Contact Form Submission: ${validatedData.subject}`,
@@ -77,7 +93,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               </p>
             </div>
           `
-        });
+          });
+        }
       } catch (emailError) {
         console.error('Failed to send email notification:', emailError);
         // Continue execution even if email fails
@@ -141,31 +158,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // CV file download
+  // CV file download - uses static CV file
   app.get("/api/download-cv", async (req, res) => {
     try {
-      const activeCv = await storage.getActiveCvFile();
-      
-      if (!activeCv) {
+      if (!checkStaticCvExists()) {
         return res.status(404).json({
           success: false,
-          message: "No CV file available for download"
+          message: "CV file not available for download"
         });
       }
 
-      const filePath = activeCv.filePath;
+      const staticCv = getStaticCvFile();
       
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).json({
-          success: false,
-          message: "CV file not found on server"
-        });
-      }
-
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${activeCv.originalName}"`);
+      res.setHeader('Content-Disposition', `attachment; filename="${staticCv.originalName}"`);
       
-      const fileStream = fs.createReadStream(filePath);
+      const fileStream = fs.createReadStream(staticCv.filePath);
       fileStream.pipe(res);
     } catch (error) {
       console.error('CV download error:', error);
@@ -176,31 +184,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // CV file viewer (public)
+  // CV file viewer (public) - uses static CV file
   app.get("/api/view-cv", async (req, res) => {
     try {
-      const activeCv = await storage.getActiveCvFile();
-      
-      if (!activeCv) {
+      if (!checkStaticCvExists()) {
         return res.status(404).json({
           success: false,
-          message: "No CV file available for viewing"
+          message: "CV file not available for viewing"
         });
       }
 
-      const filePath = activeCv.filePath;
+      const staticCv = getStaticCvFile();
       
-      if (!fs.existsSync(filePath)) {
-        return res.status(404).json({
-          success: false,
-          message: "CV file not found on server"
-        });
-      }
-
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `inline; filename="${activeCv.originalName}"`);
+      res.setHeader('Content-Disposition', `inline; filename="${staticCv.originalName}"`);
       
-      const fileStream = fs.createReadStream(filePath);
+      const fileStream = fs.createReadStream(staticCv.filePath);
       fileStream.pipe(res);
     } catch (error) {
       console.error('CV view error:', error);
@@ -211,17 +210,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get CV status
+  // Get CV status - uses static CV file
   app.get("/api/cv-status", async (req, res) => {
     try {
-      const activeCv = await storage.getActiveCvFile();
-      
-      if (activeCv) {
+      if (checkStaticCvExists()) {
+        const staticCv = getStaticCvFile();
         res.json({
           success: true,
           hasActiveCv: true,
-          filename: activeCv.originalName,
-          uploadedAt: activeCv.uploadedAt
+          filename: staticCv.originalName,
+          uploadedAt: staticCv.uploadedAt
         });
       } else {
         res.json({
