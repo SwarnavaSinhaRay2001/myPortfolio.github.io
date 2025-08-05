@@ -148,3 +148,15 @@ In Render Dashboard, confirm these are set:
 - `EMAIL_USER` = your full Gmail address
 - `EMAIL_PASSWORD` = 16-character app password (not regular password)
 - `DATABASE_URL` = your Neon connection string
+
+### 4. Use the Health Check Endpoint
+Test configuration with: `https://your-app.onrender.com/api/health`
+This will show you exactly which services are configured properly.
+
+## Quick Fix for Email Issues
+
+**The most common issue**: Missing environment variables on Render.
+
+1. **Check**: Visit your deployed app's `/api/health` endpoint
+2. **Fix**: Follow the step-by-step guide in `render-env-setup.md`
+3. **Test**: Use the contact form after Render redeploys automatically

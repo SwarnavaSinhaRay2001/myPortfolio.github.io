@@ -8,6 +8,7 @@ import path from "path";
 import fs from "fs";
 import nodemailer from "nodemailer";
 import { getStaticCvFile, checkStaticCvExists } from "./static-cv";
+import { getEmailStatus } from "./env-check";
 
 // Configure multer for file uploads
 const uploadsDir = path.join(process.cwd(), "server", "uploads");
@@ -89,6 +90,28 @@ const createEmailTransporter = () => {
 const transporter = createEmailTransporter();
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint with environment status
+  app.get("/api/health", async (req, res) => {
+    const emailStatus = getEmailStatus();
+    const dbConnected = !!process.env.DATABASE_URL;
+    const cvAvailable = checkStaticCvExists();
+    
+    res.json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      services: {
+        database: dbConnected ? "connected" : "not configured",
+        email: emailStatus.configured ? "configured" : "not configured",
+        cv: cvAvailable ? "available" : "missing"
+      },
+      email: {
+        hasUser: !!emailStatus.user,
+        hasPassword: emailStatus.hasPassword,
+        user: emailStatus.user ? `${emailStatus.user.substring(0, 3)}***@${emailStatus.user.split('@')[1]}` : null
+      }
+    });
+  });
+
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
@@ -98,7 +121,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send email notification with enhanced error handling
       try {
         if (!transporter) {
-          console.warn('❌ Email transporter not configured - contact saved but no email sent');
+          const emailStatus = getEmailStatus();
+          console.error('❌ Email transporter not configured:', {
+            hasEmailUser: !!emailStatus.user,
+            hasEmailPassword: emailStatus.hasPassword,
+            emailUser: emailStatus.user || 'NOT SET'
+          });
+          console.error('📧 Contact saved to database but email notification failed');
+          console.error('🔧 To fix: Set EMAIL_USER and EMAIL_PASSWORD in Render environment variables');
           // Don't return error - contact is still saved
         } else {
           console.log('📧 Attempting to send email notification...');
@@ -158,7 +188,19 @@ This email was sent from your portfolio contact form.`
         // Continue execution - contact is still saved even if email fails
       }
       
-      res.json({ success: true, message: "Message sent successfully!" });
+      // Determine response message based on email configuration
+      const emailStatus = getEmailStatus();
+      if (!emailStatus.configured) {
+        res.json({ 
+          success: true, 
+          message: "Message received! I'll get back to you soon. (Note: Email notifications are being configured)" 
+        });
+      } else {
+        res.json({ 
+          success: true, 
+          message: "Message sent successfully! I'll get back to you soon." 
+        });
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ 
@@ -168,9 +210,17 @@ This email was sent from your portfolio contact form.`
         });
       } else {
         console.error('Contact form error:', error);
+        const emailStatus = getEmailStatus();
+        
+        // Provide specific error message based on configuration
+        let errorMessage = "Failed to send message. Please try again.";
+        if (!emailStatus.configured) {
+          errorMessage = "Message could not be sent due to server configuration. Please try again later or contact directly via email.";
+        }
+        
         res.status(500).json({ 
           success: false, 
-          message: "Failed to send message. Please try again." 
+          message: errorMessage
         });
       }
     }

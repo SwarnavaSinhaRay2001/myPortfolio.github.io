@@ -6,9 +6,11 @@ This is a personal portfolio website for Swarnava Sinha Ray, a computer science 
 
 ### Deployment Fixes for Render.com
 - **Fixed CV Mechanism**: Now uses static CV file (SwarnavaCV.pdf) instead of ephemeral uploads
-- **Improved Email Handling**: Added graceful fallback for missing email credentials
+- **Improved Email Handling**: Added graceful fallback for missing email credentials with detailed logging
 - **Enhanced Error Handling**: Better production-ready error messages and logging
-- **Deployment Configuration**: Added Render-specific build and deployment instructions
+- **Environment Variable Checking**: Automatic validation and setup guides for missing credentials
+- **Health Check Endpoint**: Added `/api/health` for deployment diagnostics
+- **Deployment Configuration**: Complete step-by-step guides for Render environment setup
 
 # User Preferences
 
