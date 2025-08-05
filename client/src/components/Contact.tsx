@@ -30,15 +30,35 @@ export default function Contact() {
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
       const response = await apiRequest('POST', '/api/contact', data);
-      return response.json();
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.message || `Server error: ${response.status}`);
+      }
+      
+      return result;
     },
-    onSuccess: () => {
-      showNotification("Message sent successfully! I'll get back to you soon.", 'success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setErrors({});
+    onSuccess: (data) => {
+      if (data.success) {
+        showNotification("Message sent successfully! I'll get back to you soon.", 'success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setErrors({});
+      } else {
+        showNotification(data.message || 'Failed to send message. Please try again.', 'error');
+      }
     },
     onError: (error: any) => {
-      const errorMessage = error.message || 'Failed to send message. Please try again.';
+      console.error('Contact form error:', error);
+      let errorMessage = 'Failed to send message. Please try again.';
+      
+      if (error.message) {
+        errorMessage = error.message;
+      } else if (error.response) {
+        errorMessage = `Server error: ${error.response.status}`;
+      } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      }
+      
       showNotification(errorMessage, 'error');
     },
   });

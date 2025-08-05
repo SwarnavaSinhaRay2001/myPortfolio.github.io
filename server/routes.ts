@@ -39,23 +39,51 @@ const upload = multer({
   }
 });
 
-// Configure nodemailer with better error handling for deployment
+// Configure nodemailer with enhanced error handling and logging
 const createEmailTransporter = () => {
   const emailUser = process.env.EMAIL_USER;
   const emailPassword = process.env.EMAIL_PASSWORD;
   
+  console.log('Email configuration check:', {
+    hasEmailUser: !!emailUser,
+    emailUser: emailUser ? `${emailUser.substring(0, 3)}***@${emailUser.split('@')[1] || 'unknown'}` : 'not set',
+    hasEmailPassword: !!emailPassword,
+    passwordLength: emailPassword ? emailPassword.length : 0
+  });
+  
   if (!emailUser || !emailPassword) {
-    console.warn('Email credentials not configured. Email functionality will be limited.');
+    console.error('❌ Email credentials missing:', {
+      EMAIL_USER: emailUser ? 'SET' : 'MISSING',
+      EMAIL_PASSWORD: emailPassword ? 'SET' : 'MISSING'
+    });
     return null;
   }
   
-  return nodemailer.createTransport({
+  // Create transporter with enhanced configuration for better reliability
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: emailUser,
       pass: emailPassword
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   });
+  
+  // Verify transporter configuration
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error('❌ Email transporter verification failed:', error);
+    } else {
+      console.log('✅ Email transporter verified successfully');
+    }
+  });
+  
+  return transporter;
 };
 
 const transporter = createEmailTransporter();
@@ -67,37 +95,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertContactSchema.parse(req.body);
       const contact = await storage.createContact(validatedData);
       
-      // Send email notification
+      // Send email notification with enhanced error handling
       try {
         if (!transporter) {
-          console.warn('Email transporter not configured, skipping email notification');
+          console.warn('❌ Email transporter not configured - contact saved but no email sent');
+          // Don't return error - contact is still saved
         } else {
-          await transporter.sendMail({
-          from: process.env.EMAIL_USER || 'noreply@portfolio.com',
-          to: 'swarnavasinharay@gmail.com',
-          subject: `New Contact Form Submission: ${validatedData.subject}`,
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #21808d;">New Contact Form Submission</h2>
-              <div style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
-                <p><strong>Name:</strong> ${validatedData.name}</p>
-                <p><strong>Email:</strong> ${validatedData.email}</p>
-                <p><strong>Subject:</strong> ${validatedData.subject}</p>
-                <p><strong>Message:</strong></p>
-                <div style="background: white; padding: 15px; border-radius: 4px; margin-top: 10px;">
-                  ${validatedData.message.replace(/\n/g, '<br>')}
+          console.log('📧 Attempting to send email notification...');
+          
+          const emailOptions = {
+            from: process.env.EMAIL_USER,
+            to: 'swarnavasinharay@gmail.com',
+            subject: `New Contact Form Submission: ${validatedData.subject}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #21808d;">New Contact Form Submission</h2>
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
+                  <p><strong>Name:</strong> ${validatedData.name}</p>
+                  <p><strong>Email:</strong> ${validatedData.email}</p>
+                  <p><strong>Subject:</strong> ${validatedData.subject}</p>
+                  <p><strong>Message:</strong></p>
+                  <div style="background: white; padding: 15px; border-radius: 4px; margin-top: 10px;">
+                    ${validatedData.message.replace(/\n/g, '<br>')}
+                  </div>
                 </div>
+                <p style="color: #666; font-size: 12px; margin-top: 20px;">
+                  This email was sent from your portfolio contact form.
+                </p>
               </div>
-              <p style="color: #666; font-size: 12px; margin-top: 20px;">
-                This email was sent from your portfolio contact form.
-              </p>
-            </div>
-          `
+            `,
+            text: `New Contact Form Submission
+
+Name: ${validatedData.name}
+Email: ${validatedData.email}
+Subject: ${validatedData.subject}
+
+Message:
+${validatedData.message}
+
+This email was sent from your portfolio contact form.`
+          };
+          
+          console.log('📧 Email options configured:', {
+            from: emailOptions.from,
+            to: emailOptions.to,
+            subject: emailOptions.subject
+          });
+          
+          const info = await transporter.sendMail(emailOptions);
+          console.log('✅ Email sent successfully:', {
+            messageId: info.messageId,
+            response: info.response
           });
         }
-      } catch (emailError) {
-        console.error('Failed to send email notification:', emailError);
-        // Continue execution even if email fails
+      } catch (emailError: any) {
+        console.error('❌ Failed to send email notification:', {
+          error: emailError.message,
+          code: emailError.code,
+          command: emailError.command,
+          stack: emailError.stack
+        });
+        // Continue execution - contact is still saved even if email fails
       }
       
       res.json({ success: true, message: "Message sent successfully!" });
