@@ -78,12 +78,78 @@ export default function Education() {
                   style={{ animationDelay: `${1.2 + index * 0.3}s` }}
                 ></div>
                 <Card 
-                  className={`education-card bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-500 cursor-pointer ${
+                  className={`education-card relative overflow-hidden bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 hover:shadow-xl transition-all duration-300 hover:border-teal-300 dark:hover:border-teal-500 cursor-pointer ${
                     clickedCard === index ? 'animate-zoom-click' : ''
                   }`}
                   onClick={() => handleCardClick(index)}
                 >
-                  <CardContent className="p-6 lg:p-8">
+                  {/* Code Molecules Background Animation */}
+                  <div className="code-molecules-bg">
+                    {/* Floating code molecules */}
+                    <div className="code-molecule" style={{ 
+                      width: '32px', 
+                      height: '32px', 
+                      top: '15%', 
+                      left: '10%',
+                      animationDelay: `${index * 0.5}s` 
+                    }}>
+                      <span className="code-text">{'{ }'}</span>
+                    </div>
+                    <div className="code-molecule" style={{ 
+                      width: '28px', 
+                      height: '28px', 
+                      top: '25%', 
+                      right: '15%',
+                      animationDelay: `${index * 0.5 + 1}s` 
+                    }}>
+                      <span className="code-text">{'<>'}</span>
+                    </div>
+                    <div className="code-molecule" style={{ 
+                      width: '24px', 
+                      height: '24px', 
+                      bottom: '20%', 
+                      left: '20%',
+                      animationDelay: `${index * 0.5 + 0.5}s` 
+                    }}>
+                      <span className="code-text">{'[]'}</span>
+                    </div>
+                    <div className="code-molecule" style={{ 
+                      width: '30px', 
+                      height: '30px', 
+                      bottom: '30%', 
+                      right: '10%',
+                      animationDelay: `${index * 0.5 + 1.5}s` 
+                    }}>
+                      <span className="code-text">{'()'}</span>
+                    </div>
+                    <div className="code-molecule" style={{ 
+                      width: '26px', 
+                      height: '26px', 
+                      top: '50%', 
+                      left: '5%',
+                      animationDelay: `${index * 0.5 + 2}s` 
+                    }}>
+                      <span className="code-text">{'/*'}</span>
+                    </div>
+                    <div className="code-molecule" style={{ 
+                      width: '34px', 
+                      height: '34px', 
+                      top: '40%', 
+                      right: '5%',
+                      animationDelay: `${index * 0.5 + 2.5}s` 
+                    }}>
+                      <span className="code-text">{'=>'}</span>
+                    </div>
+
+                    {/* Orbital animation in center */}
+                    <div className="orbital-container" style={{ opacity: 0.3 }}>
+                      <div className="orbital-molecule orbital-1"></div>
+                      <div className="orbital-molecule orbital-2"></div>
+                      <div className="orbital-molecule orbital-3"></div>
+                    </div>
+                  </div>
+
+                  <CardContent className="relative z-10 p-6 lg:p-8">
                     <div className="flex flex-wrap items-center justify-between mb-4">
                       <h3 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-gray-200 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
                         {item.title}

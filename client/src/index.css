@@ -161,6 +161,66 @@
     }
   }
 
+  /* Code molecules animation */
+  @keyframes floatMolecule {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+      opacity: 0.6;
+    }
+    25% {
+      transform: translateY(-10px) rotate(5deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateY(-20px) rotate(0deg);
+      opacity: 1;
+    }
+    75% {
+      transform: translateY(-10px) rotate(-5deg);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes toggleCode {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes orbitalRotation {
+    0% {
+      transform: rotate(0deg) translateX(40px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(40px) rotate(-360deg);
+    }
+  }
+
+  @keyframes orbitalRotationReverse {
+    0% {
+      transform: rotate(0deg) translateX(30px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg) translateX(30px) rotate(360deg);
+    }
+  }
+
+  @keyframes pulseMolecule {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+      transform: scale(1.05);
+    }
+  }
+
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out;
   }
@@ -171,6 +231,139 @@
   
   .animate-pulse-soft {
     animation: pulseSoft 2s infinite;
+  }
+
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-timeline-draw {
+    animation: timelineDraw 2s ease-out forwards;
+  }
+
+  .animate-pulse-dot {
+    animation: pulseDot 2s infinite;
+  }
+
+  .animate-zoom-click {
+    animation: zoomClick 0.3s ease-out;
+  }
+
+  /* Code molecules styles */
+  .code-molecules-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .code-molecule {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 50%;
+    animation: floatMolecule 4s ease-in-out infinite;
+  }
+
+  .code-molecule:nth-child(1) { animation-delay: 0s; }
+  .code-molecule:nth-child(2) { animation-delay: 1s; }
+  .code-molecule:nth-child(3) { animation-delay: 2s; }
+  .code-molecule:nth-child(4) { animation-delay: 3s; }
+  .code-molecule:nth-child(5) { animation-delay: 0.5s; }
+  .code-molecule:nth-child(6) { animation-delay: 1.5s; }
+
+  .code-text {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(59, 130, 246, 0.8);
+    animation: toggleCode 2s ease-in-out infinite;
+  }
+
+  .code-text:nth-child(odd) {
+    animation-delay: 1s;
+  }
+
+  /* Orbital molecules */
+  .orbital-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+  }
+
+  .orbital-molecule {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    animation: pulseMolecule 3s infinite;
+  }
+
+  .orbital-1 {
+    animation: orbitalRotation 8s linear infinite;
+  }
+
+  .orbital-2 {
+    animation: orbitalRotationReverse 10s linear infinite;
+    animation-delay: 2s;
+  }
+
+  .orbital-3 {
+    animation: orbitalRotation 12s linear infinite;
+    animation-delay: 4s;
+  }
+
+  /* Dark mode adjustments */
+  .dark .code-molecule {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15));
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .dark .code-text {
+    color: rgba(147, 197, 253, 0.9);
+  }
+
+  .dark .orbital-molecule {
+    background: linear-gradient(45deg, #60a5fa, #a78bfa);
+  }
+
+  /* Timeline styles */
+  .timeline-line {
+    position: absolute;
+    left: 32px;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(to bottom, #14b8a6, #0891b2);
+    z-index: 1;
+  }
+
+  .timeline-item:last-child .timeline-line {
+    display: none;
+  }
+
+  /* Education card hover effects */
+  .education-card:hover .code-molecule {
+    animation-duration: 2s;
+  }
+
+  .education-card:hover .orbital-molecule {
+    animation-duration: 4s;
+  }
+
+  .education-card:hover .code-text {
+    animation-duration: 1s;
   }
   
   .notification {
