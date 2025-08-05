@@ -1,9 +1,7 @@
-import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Download, FileText, CheckCircle, Upload, Settings } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { Download, FileText, CheckCircle } from "lucide-react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNotifications } from "@/hooks/use-notifications";
 
 interface CvStatus {
@@ -14,9 +12,6 @@ interface CvStatus {
 }
 
 export default function About() {
-  const [isDragOver, setIsDragOver] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const queryClient = useQueryClient();
   const { showNotification } = useNotifications();
 
   // Fetch CV status
@@ -52,68 +47,7 @@ export default function About() {
     },
   });
 
-  // CV upload mutation
-  const uploadMutation = useMutation({
-    mutationFn: async (file: File) => {
-      const formData = new FormData();
-      formData.append('cv', file);
-      
-      const response = await fetch('/api/upload-cv', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Upload failed');
-      }
-      
-      return response.json();
-    },
-    onSuccess: () => {
-      showNotification('CV uploaded successfully!', 'success');
-      queryClient.invalidateQueries({ queryKey: ['/api/cv-status'] });
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
-    },
-    onError: (error: Error) => {
-      showNotification(error.message, 'error');
-    },
-  });
 
-  const handleFileUpload = (file: File) => {
-    if (!file.type.includes('pdf')) {
-      showNotification('Please upload a PDF file only.', 'error');
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      showNotification('File size must be less than 5MB.', 'error');
-      return;
-    }
-
-    uploadMutation.mutate(file);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileUpload(files[0]);
-    }
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -260,47 +194,7 @@ export default function About() {
                     </CardContent>
                   </Card>
                   
-                  {/* Admin CV Upload */}
-                  <Card className="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-600">
-                    <CardContent className="p-6">
-                      <h4 className="text-lg font-semibold text-slate-900 dark:text-gray-200 mb-4 flex items-center">
-                        <Settings className="text-gray-500 mr-3" />
-                        CV Management
-                      </h4>
-                      <div
-                        className={`file-upload-area rounded-lg p-6 text-center cursor-pointer transition-all duration-300 ${
-                          isDragOver ? 'dragover' : ''
-                        }`}
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        onDrop={handleDrop}
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        <Upload className="w-12 h-12 text-teal-500 mx-auto mb-3" />
-                        <p className="text-slate-600 dark:text-gray-300 mb-2">
-                          {uploadMutation.isPending ? 'Uploading...' : 'Upload new CV file'}
-                        </p>
-                        <p className="text-sm text-slate-500 dark:text-gray-400">
-                          Drag & drop or click to select (PDF only, max 5MB)
-                        </p>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept=".pdf"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) handleFileUpload(file);
-                          }}
-                        />
-                        {uploadMutation.isPending && (
-                          <div className="mt-3">
-                            <div className="w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+
                 </div>
               </div>
             </CardContent>

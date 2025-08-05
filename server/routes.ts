@@ -58,7 +58,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         await transporter.sendMail({
           from: process.env.EMAIL_USER || 'noreply@portfolio.com',
-          to: process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER || 'swarnavasinharay@gmail.com',
+          to: 'swarnavasinharay@gmail.com',
           subject: `New Contact Form Submission: ${validatedData.subject}`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
